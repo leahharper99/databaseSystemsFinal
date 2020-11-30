@@ -1,0 +1,442 @@
+
+/* --------------------------------------------------------------------------*/
+/* VEHICLE TABLE */
+
+/* create hire table */
+CREATE TABLE VEHICLE(
+    REG_NUM int,
+    MODEL varchar(255),
+    MAKE varchar(255),
+    ENGINE varchar(255),
+    CAPACITY int, 
+    CURR_MILEAGE varchar(255),
+    HIRE_RATE int,
+    OUT_NUM int
+);
+
+/* staff table constraints */
+ALTER TABLE VEHICLE
+ADD PRIMARY KEY (REG_NUM);
+
+ALTER TABLE VEHICLE
+ADD FOREIGN KEY (OUT_NUM) REFERENCES OUTLET(OUT_NUM);
+
+/* inserting values into vehicle table */
+INSERT INTO VEHICLE
+VALUES(
+    1,
+    'Outback',
+    'Subaru',
+    'V6',
+    100,
+    20000,
+    20,
+    1
+);
+
+INSERT INTO VEHICLE
+VALUES(
+    2,
+    'Civic',
+    'Honda',
+    'V4',
+    400,
+    200000,
+    15,
+    2
+);
+
+INSERT INTO VEHICLE
+VALUES(
+    3,
+    'RAV4',
+    'Toyota',
+    'V8',
+    80,
+    150000,
+    30,
+    4
+);
+
+INSERT INTO VEHICLE
+VALUES(
+    4,
+    'Sorrento',
+    'Kia',
+    'V4',
+    700,
+    30000,
+    45,
+    3
+);
+
+INSERT INTO VEHICLE
+VALUES(
+    5,
+    'Forester',
+    'Subaru',
+    'V6',
+    1000,
+    900,
+    90,
+    5
+);
+
+
+/* --------------------------------------------------------------------------*/
+/* HIRE AGREEMENT TABLE */
+
+/* create hire table */
+CREATE TABLE HIRE_AGREEMENT(
+    HIRE_NUM int,
+    CLIENT_NUM int,
+    START_DATE date,
+    END_DATE date,
+    REG_NUM int,
+    START_MILEAGE int,
+    END_MILEAGE int
+);
+
+/* staff table constraints */
+ALTER TABLE HIRE_AGREEMENT
+ADD PRIMARY KEY (HIRE_NUM);
+
+ALTER TABLE HIRE_AGREEMENT
+ADD FOREIGN KEY (CLIENT_NUM) REFERENCES CLIENT(CLIENT_NUM);
+
+ALTER TABLE HIRE_AGREEMENT
+ADD FOREIGN KEY (REG_NUM) REFERENCES VEHICLE(REG_NUM);
+
+ALTER TABLE HIRE_AGREEMENT
+ADD CHECK(END_DATE > START_DATE);
+
+ALTER TABLE HIRE_AGREEMENT
+ADD CHECK(END_MILEAGE > START_MILEAGE);
+
+
+/* inserting values into staff table */
+INSERT INTO HIRE_AGREEMENT
+VALUES(
+    10,
+    1,
+    '10-MAR-2010',
+    '20-MAR-2010',
+    1,
+    200,
+    900
+);
+
+INSERT INTO HIRE_AGREEMENT
+VALUES(
+    11,
+    2,
+    '11-JUN-2011',
+    '30-JUN-2011',
+    2,
+    150000,
+    190000
+);
+
+INSERT INTO HIRE_AGREEMENT
+VALUES(
+    12,
+    3,
+    '20-JUL-2011',
+    '21-JUL-2011',
+    3,
+    9000,
+    10000
+);
+
+INSERT INTO HIRE_AGREEMENT
+VALUES(
+    13,
+    4,
+    '11-DEC-2011',
+    '30-JAN-2012',
+    4,
+    20000,
+    29000
+);
+
+INSERT INTO HIRE_AGREEMENT
+VALUES(
+    14,
+    5,
+    '10-AUG-2019',
+    '15-AUG-2019',
+    5,
+    700,
+    900
+);
+
+
+
+/* --------------------------------------------------------------------------*/
+/* STAFF TABLE */
+
+/* create staff table */
+CREATE TABLE STAFF(
+    STAFF_NUM int,
+    F_NAME varchar(255),
+    L_NAME varchar(255),
+    ADDRESS varchar(255),
+    PHONE int,
+    DOB date,
+    SEX varchar(255),
+    HIRE_DATE date,
+    JOB_TITLE varchar(255),
+    SALARY int,
+    OUT_NUM int
+);
+
+/* staff table constraints */
+ALTER TABLE STAFF
+ADD PRIMARY KEY (STAFF_NUM);
+
+ALTER TABLE STAFF
+ADD FOREIGN KEY (OUT_NUM) REFERENCES OUTLET(OUT_NUM);
+
+ALTER TABLE STAFF
+ADD CHECK(DOB < '27-NOV-2020');
+
+ALTER TABLE STAFF
+ADD CHECK(SEX='M' OR SEX='F');
+
+/* inserting values into staff table */
+INSERT INTO STAFF
+VALUES(
+    1,
+    'Connie',
+    'Patel',
+    '99 Fox Ave',
+    4078896554,
+    '12-DEC-1976',
+    'F',
+    '30-DEC-2010',
+    'Manager',
+    50000,
+    1
+);
+
+INSERT INTO STAFF
+VALUES(
+    2,
+    'Justin',
+    'Jones',
+    '10 Turtle Ave',
+    4074446554,
+    '30-AUG-1996',
+    'M',
+    '18-MAY-2010',
+    'Sales Rep',
+    20000,
+    2
+);
+
+INSERT INTO STAFF
+VALUES(
+    3,
+    'Isabel',
+    'Fain',
+    '100 Rabbit Road',
+    3214446554,
+    '10-Mar-1979',
+    'F',
+    '20-DEC-2013',
+    'Sales Rep',
+    25000,
+    3
+);
+
+INSERT INTO STAFF
+VALUES(
+    4,
+    'Kayla',
+    'Fain',
+    '100 Rabbit Road',
+    4554446554,
+    '11-JUN-1998',
+    'F',
+    '15-JAN-2012',
+    'Manager',
+    90000,
+    4
+);
+
+INSERT INTO STAFF
+VALUES(
+    5,
+    'Don',
+    'Smith',
+    '556 Ginger Circle',
+    4588946554,
+    '13-JUL-1988',
+    'M',
+    '19-JAN-2016',
+    'Manager',
+    100000,
+    5
+);
+
+
+/* --------------------------------------------------------------------------*/
+/* CLIENT TABLE */
+
+/* create client table */
+CREATE TABLE CLIENT(
+    CLIENT_NUM int,
+    F_NAME varchar(255),
+    L_NAME varchar(255),
+    ADDRESS varchar(255),
+    PHONE int,
+    DOB date,
+    LICENCE_NUM int
+);
+
+/* client table constraints */
+ALTER TABLE CLIENT
+ADD PRIMARY KEY (CLIENT_NUM);
+
+ALTER TABLE CLIENT
+ADD CHECK(DOB < '27-NOV-2020');
+
+/* inserting values into client table */
+INSERT INTO CLIENT
+VALUES(
+    1,
+    'Leah',
+    'Harper',
+    '122 Hi Court',
+    4074923049,
+    '22-DEC-1999',
+    123456
+);
+
+INSERT INTO CLIENT
+VALUES(
+    2,
+    'Rayme',
+    'Lacy',
+    '1000 Hello Drive',
+    3214923049,
+    '12-JAN-1999',
+    12333
+);
+
+INSERT INTO CLIENT
+VALUES(
+    3,
+    'Jackson',
+    'Lacy',
+    '334 Bye Ave',
+    3214983049,
+    '22-OCT-1989',
+    13455
+);
+
+INSERT INTO CLIENT
+VALUES(
+    4,
+    'Justin',
+    'McLendon',
+    '999 Lacy Ave',
+    8987923049,
+    '11-NOV-2001',
+    56677
+);
+
+INSERT INTO CLIENT
+VALUES(
+    5,
+    'Connie',
+    'Harper',
+    '990 Dog Drive',
+    4072575034,
+    '09-AUG-1965',
+    87656
+);
+
+/* --------------------------------------------------------------------------*/
+/* OUTLET TABLE */
+
+/* create outlet table */
+CREATE TABLE OUTLET(
+    OUT_NUM int,
+    ADDRESS varchar(255),
+    PHONE int,
+    FAX int
+);
+
+/* outlet table constraints */
+ALTER TABLE OUTLET
+ADD PRIMARY KEY (OUT_NUM);
+
+/* inserting values into OUTLET table */
+INSERT INTO OUTLET
+VALUES(
+    1,
+    '1000 Kelly Creek Circle',
+    4074923045,
+    4074923047
+);
+INSERT INTO OUTLET
+VALUES(
+    2,
+    '104 Red Road',
+    3214923045,
+    3214993047
+);
+INSERT INTO OUTLET
+VALUES(
+    3,
+    '566 Brevard Ave',
+    9876756655,
+    9875434567
+);
+INSERT INTO OUTLET
+VALUES(
+    4,
+    '2001 Blue Street',
+    9879087665,
+    3214556799
+);
+INSERT INTO OUTLET
+VALUES(
+    5,
+    '708 Marbrisa Court',
+    3212234135,
+    3219177086
+);
+
+/* --------------------------------------------------------------------------*/
+/* Queries */
+
+SELECT * FROM VEHICLE
+WHERE curr_mileage > 10000;
+
+SELECT * 
+FROM STAFF
+WHERE SALARY >= 50000
+ORDER BY HIRE_DATE;
+
+SELECT VEHICLE.MODEL, VEHICLE.MAKE
+FROM ((CLIENT
+INNER JOIN HIRE_AGREEMENT ON CLIENT.CLIENT_NUM = HIRE_AGREEMENT.CLIENT_NUM)
+INNER JOIN VEHICLE ON HIRE_AGREEMENT.REG_NUM = VEHICLE.REG_NUM)
+WHERE client.f_name='Justin';
+
+SELECT VEHICLE.model, VEHICLE.make, OUTLET.address
+FROM VEHICLE
+INNER JOIN OUTLET ON OUTLET.out_num = VEHICLE.out_num
+WHERE OUTLET.out_num = 5;
+
+SELECT STAFF.f_name, STAFF.l_name, STAFF.address, STAFF.job_title, OUTLET.out_num
+FROM STAFF
+INNER JOIN OUTLET ON OUTLET.out_num = STAFF.out_num;
+
+
+
+
+
+
